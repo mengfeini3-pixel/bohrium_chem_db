@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>caffeic acid - 物质详情 | 波尔化学</title>
+<style>
+/* ========== Reset & Base (DESIGN.md) ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+  background: #F7F8FA;
+  color: #1D2129;
+  font-size: 14px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========== Layout ========== */
+.app { display: flex; min-height: 100vh; }
+
+/* ========== Sidebar (Bohrium) — 参考 chem_paper_details_bohrium ========== */
+.sidebar {
+  width: 220px;
+  background: #F7F8FA;
+  border-right: 1px solid #E5E6EB;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.logo { display: flex; align-items: center; gap: 8px; padding: 16px 18px; }
+.logo-icon {
+  width: 36px; height: 36px;
+  border: 2px solid #020C1A;
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-weight: 600; line-height: 1; position: relative;
+}
+.logo-icon .num { font-size: 8px; position: absolute; top: 2px; right: 3px; color: #4E5969; }
+.logo-icon .sym { font-size: 14px; color: #020C1A; }
+.logo-text { line-height: 1.2; }
+.logo-text .cn { font-size: 16px; font-weight: 600; color: #1D2129; }
+.logo-text .en { font-size: 11px; color: #86909C; }
+
+.nav { padding: 8px 10px; flex: 1; overflow-y: auto; }
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 8px;
+  cursor: pointer; color: #1D2129; font-size: 14px;
+  transition: background 0.15s;
+}
+.nav-item:hover { background: #E5E6EB; }
+.nav-item .icon { width: 16px; height: 16px; opacity: 0.85; flex-shrink: 0; }
+.nav-item .arrow { margin-left: auto; font-size: 10px; color: #86909C; }
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.nav-section { margin-top: 4px; }
+.sub-list { padding-left: 20px; margin-top: 2px; }
+.sub-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 12px; border-radius: 8px;
+  cursor: pointer; color: #4E5969; font-size: 13px;
+  transition: background 0.15s;
+}
+.sub-item:hover { background: #E5E6EB; }
+.sub-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+.history-list { padding-left: 20px; }
+.history-item {
+  padding: 7px 12px; border-radius: 8px;
+  cursor: pointer; color: #4E5969; font-size: 13px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: background 0.15s;
+}
+.history-item:hover { background: #E5E6EB; }
+
+.sidebar-footer {
+  border-top: 1px solid #E5E6EB;
+  padding: 12px;
+}
+.invite-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 12px; border-radius: 8px;
+  background: #F2F3F5; font-size: 13px; font-weight: 500;
+  color: #4E5969; cursor: pointer; margin-bottom: 12px;
+  transition: background 0.15s;
+}
+.invite-btn:hover { background: #E5E6EB; }
+.plan { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #4E5969; margin-bottom: 6px; }
+.plan .upgrade {
+  margin-left: auto; font-size: 12px; color: #86909C;
+  background: #fff; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid #E5E6EB; cursor: pointer;
+}
+.quota { display: flex; align-items: center; gap: 14px; font-size: 12px; color: #4E5969; }
+.quota span { display: inline-flex; align-items: center; gap: 4px; }
+
+.bottom-bar {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border-top: 1px solid #E5E6EB;
+  font-size: 13px; color: #4E5969;
+}
+.avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #3B45E5, #6E25FF); }
+.collapse-handle {
+  position: absolute; right: -12px; top: 50%;
+  transform: translateY(-50%);
+  width: 22px; height: 36px;
+  background: #fff; border: 1px solid #E5E6EB; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #86909C; z-index: 5;
+}
+
+/* ========== Main Content ========== */
+.main-content {
+  flex: 1; min-width: 0; display: flex; flex-direction: column;
+}
+
+/* ========== Top Bar ========== */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #F2F3F5;
+  padding: 0 32px;
+  height: 56px;
+  display: flex; align-items: center;
+  box-shadow: 0px 2px 6px rgba(103,104,132,0.15);
+}
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  color: #4E5969; font-size: 13px; cursor: pointer;
+  padding: 6px 12px; border-radius: 8px;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.back-btn:hover { background: #F2F3F5; color: #1D2129; }
+.back-btn svg { width: 16px; height: 16px; }
+
+.back-to-top {
+  display: flex; align-items: center;
+  width: 28px; height: 28px;
+  color: #86909C; cursor: pointer;
+  justify-content: center;
+  border: 1px solid #E5E6EB; border-radius: 6px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  background: #fff;
+  margin-right: 4px;
+}
+.back-to-top:hover { background: #F2F3F5; color: #3b45e5; border-color: #C9CDD4; }
+.back-to-top svg { width: 14px; height: 14px; }
+
+.detail-tabs {
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px;
+  flex: 1;
+}
+.detail-tab {
+  padding: 6px 14px;
+  font-size: 13px; color: #4E5969;
+  cursor: pointer; border-radius: 8px;
+  transition: all 0.15s;
+  white-space: nowrap;
+  font-weight: 400;
+}
+.detail-tab:hover { color: #3b45e5; background: #EFF2FD; }
+.detail-tab.active {
+  color: #3b45e5; font-weight: 500;
+  background: transparent;
+}
+.detail-tab.active::after {
+  content:''; display:block; margin-top:2px;
+  width:16px; height:2px; border-radius:1px;
+  background:#3b45e5; margin-left:auto;margin-right:auto;
+}
+.spacer { flex: 1; }
+.feedback-btn {
+  display: flex; align-items: center; gap: 5px;
+  color: #86909C; font-size: 12px; cursor: pointer;
+  padding: 5px 10px; border-radius: 8px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.feedback-btn:hover { background: #F2F3F5; color: #4E5969; }
+
+/* ========== Content Scroll Area ========== */
+.content-area {
+  flex: 1; padding: 28px 40px 60px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ========== Hero / Molecule Section ========== */
+.hero-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 32px 36px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 10px 0px rgba(159,186,220,0.2);
+}
+.hero-header {
+  display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px;
+}
+.hero-formula {
+  font-size: 20px; font-weight: 600; color: #1D2129;
+}
+.hero-cas {
+  font-size: 13px; color: #3b45e5;
+  margin-left: auto;
+  font-weight: 400;
+}
+.hero-name {
+  font-size: 14px; color: #4E5969; margin-bottom: 24px;
+}
+.molecule-display {
+  display: flex; justify-content: center;
+  padding: 20px 0;
+}
+.molecule-img {
+  max-width: 380px;
+  height: auto;
+}
+
+/* ========== Synonyms Section ========== */
+.syn-section {
+  margin-bottom: 20px;
+}
+.syn-tabs {
+  display: flex; gap: 20px; margin-bottom: 12px;
+}
+.syn-tab {
+  font-size: 13px; font-weight: 500; color: #1D2129;
+  padding-bottom: 6px;
+  cursor: pointer; position: relative;
+}
+.syn-tab.active { color: #020C1A; }
+.syn-tab.active::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:2px; background:#020C1A; border-radius:1px;
+}
+.syn-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.syn-tag {
+  display: inline-flex; align-items: center;
+  padding: 4px 12px; border-radius: 6px;
+  font-size: 12px; color: #4E5969;
+  background: #F2F3F5;
+  cursor: default;
+  border: 1px solid #F2F3F5;
+  transition: all 0.15s;
+}
+.syn-tag:hover { border-color: #E5E6EB; background: #fff; }
+.expand-link {
+  font-size: 12px; color: #3b45e5; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 2px;
+  margin-left: 4px;
+}
+.expand-link:hover { text-decoration: underline; }
+
+/* ========== Section Card ========== */
+.section-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 10px 0px rgba(159,186,220,0.2);
+}
+.section-title {
+  font-size: 17px; font-weight: 600; color: #1D2129;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F2F3F5;
+}
+
+/* ========== Info Table ========== */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.info-table tr {
+  border-bottom: 1px solid #F2F3F5;
+}
+.info-table tr:last-child { border-bottom: none; }
+.info-table td {
+  padding: 11px 0;
+  vertical-align: top;
+  font-size: 13px;
+}
+.info-table td:first-child {
+  color: #86909C;
+  width: 140px;
+  font-weight: 400;
+}
+.info-table td:last-child {
+  color: #1D2129;
+  word-break: break-all;
+}
+.info-table .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12.5px;
+}
+
+/* ========== Drug-likeness Layout ========== */
+.drug-layout {
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.drug-table-wrap { overflow-x: auto; }
+.drug-table {
+  width: 100%; border-collapse: collapse;
+}
+.drug-table th {
+  text-align: left; padding: 8px 12px;
+  font-size: 12px; font-weight: 500; color: #86909C;
+  border-bottom: 1px solid #F2F3F5;
+  background: #FAFBFF;
+}
+.drug-table td {
+  padding: 9px 12px;
+  font-size: 13px; color: #1D2129;
+  border-bottom: 1px solid #F2F3F5;
+}
+.radar-wrap {
+  display: flex; justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+}
+.radar-legend {
+  display: flex; justify-content: center;
+  gap: 20px; margin-top: 8px;
+  font-size: 11px; color: #86909C;
+}
+.radar-legend span { display: flex; align-items: center; gap: 4px; }
+.legend-line {
+  width: 20px; height: 2px;
+  border-radius: 1px;
+}
+.legend-line.lip { background: #3b45e5; }
+.legend-line.sub { background: #F5A623; }
+
+/* ========== Physicochemical Grid ========== */
+.phys-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.phys-grid .info-table tr:nth-child(even) td { background: transparent; }
+
+/* ========== Patent List ========== */
+.patent-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.patent-count { font-size: 13px; color: #86909C; }
+.patent-list { list-style: none; }
+.patent-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #F2F3F5;
+}
+.patent-item:last-child { border-bottom: none; }
+.p-index {
+  font-size: 13px; font-weight: 600; color: #1D2129;
+  margin-right: 6px;
+}
+.p-title {
+  font-size: 14px; color: #1D2129;
+  font-weight: 500; display: inline;
+  cursor: pointer;
+}
+.p-title:hover { color: #3b45e5; }
+.p-meta {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 6px;
+  font-size: 12px; color: #86909C;
+}
+.p-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.p-date { }
+.status-tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 1px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 500;
+  border: 1px solid currentColor;
+}
+.status-tag.granted { color: #00B42A; }
+.status-tag.pending { color: #F5A623; }
+.pdf-tag {
+  display: inline-flex; align-items: center; gap: 2px;
+  padding: 1px 6px; border-radius: 3px;
+  font-size: 11px; color: #F53F3F;
+  background: #FFECE8;
+  border: 1px solid #FFccc7;
+  font-weight: 500;
+}
+.p-assignee { color: #86909C; }
+
+/* ========== Paper List ========== */
+.paper-list { list-style: none; }
+.paper-item {
+  padding: 18px 0;
+  border-bottom: 1px solid #F2F3F5;
+}
+.paper-item:last-child { border-bottom: none; }
+.paper-header {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin-bottom: 6px;
+}
+.paper-index {
+  font-size: 13px; font-weight: 600; color: #1D2129;
+  flex-shrink: 0; margin-top: 1px;
+}
+.paper-title {
+  font-size: 14px; font-weight: 500; color: #1D2129;
+  cursor: pointer; line-height: 1.5;
+}
+.paper-title:hover { color: #3b45e5; }
+.paper-desc {
+  font-size: 12px; color: #86909C; margin-top: 6px;
+  line-height: 1.6;
+}
+.paper-authors {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 8px; font-size: 12px; color: #4E5969;
+}
+.author-avatar {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10px; color: #fff; flex-shrink: 0;
+}
+.av-green { background: #00B42A; }
+.av-blue { background: #3b45e5; }
+.av-orange { background: #F5A623; }
+.paper-journal {
+  color: #3b45e5; cursor: pointer;
+}
+.paper-journal:hover { text-decoration: underline; }
+.paper-stats {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 8px; font-size: 12px; color: #86909C;
+}
+.paper-stat { display: flex; align-items: center; gap: 3px; }
+.action-btns { margin-left: auto; display: flex; gap: 12px; }
+.action-btn {
+  display: flex; align-items: center; gap: 4px;
+  color: #86909C; cursor: pointer; font-size: 12px;
+  padding: 3px 8px; border-radius: 6px;
+  transition: all 0.15s;
+}
+.action-btn:hover { background: #F2F3F5; color: #4E5969; }
+
+/* ========== NMR & QChem Summary Cards ========== */
+.nmr-list {
+  display: flex; flex-direction: column; gap: 14px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.nmr-list::-webkit-scrollbar { width: 6px; }
+.nmr-list::-webkit-scrollbar-track { background: #F2F3F5; border-radius: 3px; }
+.nmr-list::-webkit-scrollbar-thumb { background: #C9CDD4; border-radius: 3px; border: 1px solid #E5E6EB; }
+.nmr-list::-webkit-scrollbar-thumb:hover { background: #86909C; }
+/* Firefox */
+.nmr-list { scrollbar-width: thin; scrollbar-color: #C9CDD4 #F2F3F5; }
+.nmr-item {
+  background: #F7F8FA;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+.nmr-item-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
+.nmr-type-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #EFF2FD;
+  color: #3b45e5;
+}
+.nmr-field { font-size: 13px; color: #4E5969; }
+.nmr-field .lbl { color: #86909C; }
+.nmr-shift-label { font-size: 12px; color: #86909C; margin-bottom: 4px; }
+.nmr-shift { font-size: 13px; color: #1D2129; line-height: 1.65; margin-bottom: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; padding-left: 14px; border-left: 3px solid #E5E6EB; }
+.nmr-stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.nmr-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #4E5969;
+}
+.nmr-stats .stat-item .stat-lbl { color: #86909C; }
+.nmr-stats .stat-item .stat-val {
+  color: #1D2129;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.nmr-op-btn {
+  margin-left: auto;
+  width: 30px; height: 30px;
+  border: none; background: transparent;
+  border-radius: 8px; cursor: pointer;
+  color: #86909C;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.nmr-op-btn:hover { background: #E5E6EB; color: #3b45e5; }
+.nmr-meta { display: flex; align-items: center; gap: 16px; font-size: 12px; color: #86909C; flex-wrap: wrap; }
+.nmr-link {
+  display: inline-flex; align-items: center; gap: 3px;
+  color: #3b45e5; font-size: 12px; cursor: pointer;
+}
+.nmr-link:hover { text-decoration: underline; }
+
+.qchem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.qchem-grid .qc-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid #F2F3F5;
+  font-size: 13px;
+}
+.qchem-grid .qc-item:last-child { border-bottom: none; }
+.qchem-grid .qc-item .qc-lbl { color: #86909C; }
+.qchem-grid .qc-item .qc-val { color: #1D2129; font-variant-numeric: tabular-nums; font-weight: 500; }
+.qchem-grid .qc-item .qc-formula {
+  display: block; font-size: 11px; color: #C9CDD4; font-weight: 400; margin-top: 1px;
+}
+.view-more-wrap { text-align: right; margin-top: 12px; }
+.view-more-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: #3b45e5; font-size: 13px; cursor: pointer;
+  padding: 8px 20px; border-radius: 8px;
+  background: transparent; border: none;
+  transition: background 0.15s;
+}
+.view-more-btn:hover { background: #EFF2FD; }
+
+/* ========== Load More ========== */
+.load-more {
+  text-align: center; padding: 20px 0 0;
+}
+.load-more-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: #3b45e5; font-size: 13px; cursor: pointer;
+  padding: 6px 16px; border-radius: 8px;
+  transition: all 0.15s;
+  background: transparent;
+  border: none;
+}
+.load-more-btn:hover { background: #EFF2FD; }
+
+/* ========== AI Float Button ========== */
+.ai-float {
+  position: fixed; bottom: 32px; right: 32px;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(105deg, #1160FF, #6E25FF);
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(59,69,229,0.35);
+  cursor: pointer; z-index: 200;
+  font-size: 12px; font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ai-float:hover { transform: scale(1.06); box-shadow: 0 6px 16px rgba(59,69,229,0.45); }
+
+/* ========== Responsive ========== */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .content-area { padding: 20px 16px; }
+  .drug-layout { grid-template-columns: 1fr; }
+  .phys-grid { grid-template-columns: 1fr; }
+  .detail-tabs { overflow-x: auto; flex-wrap: nowrap; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<!-- ====== Left Sidebar (参考 chem_paper_detail_bohrium) ====== -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-icon">
+      <span class="num">118</span>
+      <span class="sym">B</span>
+    </div>
+    <div class="logo-text">
+      <div class="cn">波尔</div>
+      <div class="en">Bohrium</div>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <div class="nav-item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      新对话
+    </div>
+    <div class="nav-item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      站内搜索
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        科学导航
+        <span class="arrow">▾</span>
+      </div>
+      <div class="sub-list">
+        <div class="sub-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>订阅</div>
+        <div class="sub-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>期刊库</div>
+        <div class="sub-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>学者</div>
+        <div class="sub-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>科学百科</div>
+        <div class="sub-item"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>知识库</div>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+      实践
+      <span class="arrow">▸</span>
+    </div>
+    <div class="nav-item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2v7.5L4 17h16l-6-7.5V2"/><path d="M8 2h8"/></svg>
+      跃迁实验室
+    </div>
+    <div class="nav-item">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      智算
+      <span class="arrow">▸</span>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        历史对话
+        <span class="arrow">▾</span>
+      </div>
+      <div class="history-list">
+        <div class="history-item">告诉我最近在生…</div>
+        <div class="history-item">告诉我最近在生…</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="invite-btn">
+      <span>🎁 邀搭子得体验会员</span>
+      <span>→</span>
+    </div>
+    <div class="plan">
+      Basic
+      <span class="upgrade">去升级</span>
+    </div>
+    <div class="quota">
+      <span>✦ 200</span>
+      <span>💬 60次</span>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="avatar"></div>
+    <span>🌐 CN ▾</span>
+    <span>🔔</span>
+    <span>?</span>
+  </div>
+
+  <div class="collapse-handle">‹</div>
+</aside>
+
+<!-- ====== Main Content ====== -->
+<main class="main-content">
+
+<!-- Top Navigation Bar -->
+<div class="top-bar">
+  <a class="back-btn" href="chem_substance_results.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg> 返回
+  </a>
+  <div class="detail-tabs">
+    <a class="back-to-top" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" title="回到顶部">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </a>
+    <span class="detail-tab active" onclick="switchTab(this,'section-basic')">基础信息</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-drug')">类药性</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-phys')">理化性质</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-nmr')">NMR数据</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-qchem')">分子计算数据</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-patent')">关联专利</span>
+    <span class="detail-tab" onclick="switchTab(this,'section-paper')">关联论文</span>
+  </div>
+  <div class="feedback-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/> 反馈
+  </div>
+</div>
+
+<div class="content-area">
+
+<!-- ====== Hero Card: Molecule ====== -->
+<div class="hero-card" id="section-hero">
+  <div class="hero-header">
+    <span class="hero-formula">分子式：C<sub>9</sub>H<sub>8</sub>O<sub>4</sub></span>
+    <span class="hero-cas">CAS 331-39-5</span>
+  </div>
+  <div class="hero-name">caffeic acid</div>
+  <div class="molecule-display">
+    <!-- Caffeic acid 2D structure SVG -->
+    <svg class="molecule-img" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+      <!-- Carboxylic acid group -->
+      <text x="30" y="120" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">HO</text>
+      <text x="58" y="115" font-family="Arial,sans-serif" font-size="16" fill="#333">C</text>
+      <text x="70" y="108" font-family="Arial,sans-serif" font-size="13" fill="#d32f2f" font-weight="bold">O</text>
+      <line x1="68" y1="105" x2="68" y2="82" stroke="#333" stroke-width="2"/>
+      
+      <!-- Chain to ring -->
+      <path d="M72 95 Q90 75 110 78 Q130 81 145 92" stroke="#333" stroke-width="2" fill="none"/>
+      
+      <!-- Benzene ring -->
+      <polygon points="160,65 195,47 230,63 232,98 198,117 163,101" fill="none" stroke="#333" stroke-width="2"/>
+      <!-- Inner double bonds for aromaticity -->
+      <line x1="168" y1="70" x2="192" y2="57" stroke="#333" stroke-width="1.5"/>
+      <line x1="222" y1="71" x2="225" y2="94" stroke="#333" stroke-width="1.5"/>
+      <line x1="172" y1="99" x2="192" y2="111" stroke="#333" stroke-width="1.5"/>
+      
+      <!-- OH on ring (position 3) -->
+      <text x="245" y="68" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">OH</text>
+      <line x1="240" y1="62" x2="228" y2="61" stroke="#333" stroke-width="2"/>
+      
+      <!-- OH on ring (position 4) -->
+      <text x="250" y="125" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">OH</text>
+      <line x1="244" y1="119" x2="228" y2="109" stroke="#333" stroke-width="2"/>
+    </svg>
+  </div>
+  
+  <!-- Synonyms -->
+  <div class="syn-section">
+    <div class="syn-tabs">
+      <span class="syn-tab active">同义词</span>
+      <span class="syn-tab">化合物类型</span>
+    </div>
+    <div class="syn-tags">
+      <span class="syn-tag">caffeic acid</span>
+      <span class="syn-tag">3-(3,4-dihydroxycinnamic)acid</span>
+      <span class="syn-tag">3-(3,4-dihydroxyphenyl)-2-propenoic acid</span>
+      <span class="syn-tag">CFA</span>
+      <span class="syn-tag">3-(3,4-dihydroxyphenyl)prop-2-enoic acid</span>
+      <span class="syn-tag">RefChem:1066648</span>
+      <span class="syn-tag">Caffeic Acid 1000 microg/mL in Acetone</span>
+      <span class="expand-link">展开 &#8744;</span>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 基础信息 ====== -->
+<div class="section-card" id="section-basic">
+  <div class="section-title">基础信息</div>
+  <table class="info-table">
+    <tr><td>MW</td><td>180.16 g/mol</td></tr>
+    <tr><td>IUPAC Name</td><td class="mono">3-[3,4-dihydroxyphenyl]prop-2-enoic acid</td></tr>
+    <tr><td>SMILES</td><td class="mono">O=C(O)C=Cc1cc(O)c(O)cc1</td></tr>
+    <tr><td>InChIKey</td><td class="mono">QAIPRVGGONVGQAS-UHFFFAOYSA-N</td></tr>
+    <tr><td>InChi</td><td class="mono">InChI=1S/C9H8O4/c10-7-3-6(5(8)7)1-2-4(9(12)13)/h1-5,10-11H,(H,12,13)</td></tr>
+  </table>
+</div>
+
+<!-- ====== 类药性 ====== -->
+<div class="section-card" id="section-drug">
+  <div class="section-title">类药性</div>
+  <div class="drug-layout">
+    <div class="drug-table-wrap">
+      <table class="drug-table">
+        <thead><tr><th>性质</th><th>数值</th></tr></thead>
+        <tbody>
+          <tr><td>MW</td><td>180.16</td></tr>
+          <tr><td>LogP</td><td>1.2</td></tr>
+          <tr><td>HBD</td><td>3</td></tr>
+          <tr><td>HBA</td><td>4</td></tr>
+          <tr><td>RotB</td><td>2</td></tr>
+          <tr><td>PSA</td><td>77.8</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="radar-wrap">
+      <canvas id="radarChart" width="280" height="260"></canvas>
+      <div class="radar-legend">
+        <span><i class="legend-line lip"></i> Lipinski / Vebar rules</span>
+        <span><i class="legend-line sub"></i> Substance</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 理化性质 ====== -->
+<div class="section-card" id="section-phys">
+  <div class="section-title">理化性质</div>
+  <table class="info-table phys-grid" style="table-layout:fixed">
+    <colgroup><col style="width:150px"><col><col style="width:150px"><col></colgroup>
+    <tr><td>可旋转键数量</td><td>2</td><td>重原子数</td><td>13</td></tr>
+    <tr><td>氢键供体数</td><td>3</td><td>形式电荷</td><td>0</td></tr>
+    <tr><td>氢键受体数</td><td>4</td><td>分子复杂度</td><td>212</td></tr>
+    <tr><td>拓扑极性表面积</td><td>77.8 &Aring;&sup2;</td><td>同位素原子数</td><td>0</td></tr>
+    <tr><td>手性中心（明确/未明确）</td><td>0/0</td><td>立体键数量（明确/未明确）</td><td>0/1</td></tr>
+    <tr><td colspan="2">共价单位数</td><td colspan="2">1</td></tr>
+  </table>
+</div>
+
+<!-- ====== NMR 波谱数据 ====== -->
+<div class="section-card" id="section-nmr">
+  <div class="section-title">NMR 数据</div>
+  <div class="nmr-list">
+    <div class="nmr-item">
+      <div class="nmr-item-head">
+        <span class="nmr-type-tag">1H NMR</span>
+        <span class="nmr-field"><span class="lbl">频率:</span> 600 MHz</span>
+        <span class="nmr-field"><span class="lbl">溶剂:</span> CDCl<sub>3</sub></span>
+        <button class="nmr-op-btn preview-trigger" title="结构预览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
+      <div class="nmr-shift-label">化学位移</div>
+      <div class="nmr-shift">δ 1.76 (dd, J = 13.4, 3.6 Hz, 4H), 1.67–1.59 (m, 4H), 1.56–1.41 (m, 5H), 1.23 (d, J = 12.5 Hz, 5H)</div>
+      <div class="nmr-stats">
+        <span class="stat-item"><span class="stat-lbl">原子总数:</span> <span class="stat-val">18</span></span>
+        <span class="stat-item"><span class="stat-lbl">不同环境数:</span> <span class="stat-val">9</span></span>
+        <span class="stat-item"><span class="stat-lbl">抽取峰数:</span> <span class="stat-val">4</span></span>
+      </div>
+      <div class="nmr-meta">
+        <span>DOI: 10.1021/ol503410e</span>
+        <a class="nmr-link">查看原文 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="8 7 17 7 17 16"/></svg></a>
+      </div>
+    </div>
+    <div class="nmr-item">
+      <div class="nmr-item-head">
+        <span class="nmr-type-tag">13C NMR</span>
+        <span class="nmr-field"><span class="lbl">频率:</span> 151 MHz</span>
+        <span class="nmr-field"><span class="lbl">溶剂:</span> CDCl<sub>3</sub></span>
+        <button class="nmr-op-btn preview-trigger" title="结构预览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
+      <div class="nmr-shift-label">化学位移</div>
+      <div class="nmr-shift">δ 43.53, 34.22, 26.75</div>
+      <div class="nmr-stats">
+        <span class="stat-item"><span class="stat-lbl">原子总数:</span> <span class="stat-val">10</span></span>
+        <span class="stat-item"><span class="stat-lbl">不同环境数:</span> <span class="stat-val">3</span></span>
+        <span class="stat-item"><span class="stat-lbl">抽取峰数:</span> <span class="stat-val">3</span></span>
+      </div>
+      <div class="nmr-meta">
+        <span>DOI: 10.1021/acscatal.3c02084</span>
+        <a class="nmr-link">查看原文 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="8 7 17 7 17 16"/></svg></a>
+      </div>
+    </div>
+    <div class="nmr-item">
+      <div class="nmr-item-head">
+        <span class="nmr-type-tag">1H NMR</span>
+        <span class="nmr-field"><span class="lbl">频率:</span> 600 MHz</span>
+        <span class="nmr-field"><span class="lbl">溶剂:</span> CDCl<sub>3</sub></span>
+        <button class="nmr-op-btn preview-trigger" title="结构预览"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      </div>
+      <div class="nmr-shift-label">化学位移</div>
+      <div class="nmr-shift">δ 1.70 (m, 8H), 1.62–1.48 (m, 8H), 1.43–1.18 (m, 2H)</div>
+      <div class="nmr-stats">
+        <span class="stat-item"><span class="stat-lbl">原子总数:</span> <span class="stat-val">18</span></span>
+        <span class="stat-item"><span class="stat-lbl">不同环境数:</span> <span class="stat-val">3</span></span>
+        <span class="stat-item"><span class="stat-lbl">抽取峰数:</span> <span class="stat-val">3</span></span>
+      </div>
+      <div class="nmr-meta">
+        <span>DOI: 10.1021/acscatal.3c02084</span>
+        <a class="nmr-link">查看原文 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7"/><polyline points="8 7 17 7 17 16"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== 分子计算数据 ====== -->
+<div class="section-card" id="section-qchem">
+  <div class="section-title">分子计算数据</div>
+  <div class="qchem-grid">
+    <div class="qc-item"><span class="qc-lbl">原子总数</span><span class="qc-val">23</span></div>
+    <div class="qc-item"><span class="qc-lbl">分子总电荷</span><span class="qc-val">0</span></div>
+    <div class="qc-item"><span class="qc-lbl">自旋多重度</span><span class="qc-val">1</span></div>
+    <div class="qc-item"><span class="qc-lbl">总能量</span><span class="qc-val">-48.8153 Eh</span></div>
+    <div class="qc-item"><span class="qc-lbl">HOMO 能级</span><span class="qc-val">-10.6903 eV</span></div>
+    <div class="qc-item"><span class="qc-lbl">LUMO 能级</span><span class="qc-val">-9.2635 eV</span></div>
+    <div class="qc-item"><span class="qc-lbl">偶极矩</span><span class="qc-val">8.691 Debye</span></div>
+    <div class="qc-item"><span class="qc-lbl">化学势 μ</span><span class="qc-val">-4.96 eV</span></div>
+    <div class="qc-item"><span class="qc-lbl">化学硬度 η</span><span class="qc-val">1.02 eV</span></div>
+    <div class="qc-item"><span class="qc-lbl">亲电性指数 ω</span><span class="qc-val">12.08 eV</span></div>
+    <div class="qc-item"><span class="qc-lbl">电负性 χ</span><span class="qc-val">4.96 eV</span></div>
+  </div>
+  <div class="view-more-wrap">
+    <a class="view-more-btn" href="chem_qchem_detail_bohrium.html">查看更多 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg></a>
+  </div>
+</div>
+
+<!-- ====== 关联专利 ====== -->
+<div class="section-card" id="section-patent">
+  <div class="patent-header">
+    <span class="section-title" style="border:none;padding:0;margin:0">关联专利 <span style="color:#86909C;font-weight:400;font-size:14px">(485)</span></span>
+  </div>
+  <ul class="patent-list">
+    <li class="patent-item">
+      <div><span class="p-index">1.</span><span class="p-title">野菊花黄酮在制备预防、治疗和/或缓解D-GalN/LPS诱导的肝、眼损伤的产品中的应用</span></div>
+      <div class="p-meta">
+        <span class="p-id">CN119792370A</span>
+        <span class="p-date">2025</span>
+        <span class="status-tag granted">&#9745; 待审</span>
+        <span class="pdf-tag">PDF</span>
+      </div>
+    </li>
+    <li class="patent-item">
+      <div><span class="p-index">2.</span><span class="p-title">A metal complex and use thereof</span></div>
+      <div class="p-meta">
+        <span class="p-id">US2022039659SA1</span>
+        <span class="p-date">2022</span>
+        <span class="status-tag pending">&#9745; 待审</span>
+        <span class="pdf-tag">PDF</span>
+      </div>
+      <div class="p-assignee">当前专利人 Rhodia Operations SA5</div>
+    </li>
+    <li class="patent-item">
+      <div><span class="p-index">3.</span><span class="p-title">一种治疗铜屑病的药物及其制备方法</span></div>
+      <div class="p-meta">
+        <span class="p-id">CN11567767GA</span>
+        <span class="p-date">2023</span>
+        <span class="status-tag granted">&#9745; 待审</span>
+        <span class="pdf-tag">PDF</span>
+      </div>
+      <div class="p-assignee">当前专利人 黑龙江中医药大学</div>
+    </li>
+    <li class="patent-item">
+      <div><span class="p-index">4.</span><span class="p-title">活性物质-六肽复合体及包含其的化妆品组合物</span></div>
+      <div class="p-meta">
+        <span class="p-id">CN112738420A</span>
+        <span class="p-date">2020</span>
+        <span class="status-tag granted">&#9745; 授权</span>
+        <span class="pdf-tag">PDF</span>
+      </div>
+      <div class="p-assignee">当前专利人 花思根有限公司</div>
+    </li>
+    <li class="patent-item">
+      <div><span class="p-index">5.</span><span class="p-title">Stabilized compositions of radionuclides and uses thereof</span></div>
+      <div class="p-meta">
+        <span class="p-id">US2019001234A1</span>
+        <span class="p-date">2019</span>
+        <span class="status-tag pending">&#9745; 待审</span>
+        <span class="pdf-tag">PDF</span>
+      </div>
+    </li>
+  </ul>
+  <div class="load-more">
+    <button class="load-more-btn">查看更多 &#8595;</button>
+  </div>
+</div>
+
+<!-- ====== 关联论文 ====== -->
+<div class="section-card" id="section-paper">
+  <div class="patent-header">
+    <span class="section-title" style="border:none;padding:0;margin:0">关联论文 <span style="color:#86909C;font-weight:400;font-size:14px">(3583)</span></span>
+  </div>
+  <ul class="paper-list">
+    <li class="paper-item">
+      <div class="paper-header">
+        <span class="paper-index">1.</span>
+        <span class="paper-title">Mechanism elucidation and biochemometric-based screening of substances in Schisandra chinensis leaves for alcoholic liver injury</span>
+      </div>
+      <div class="paper-desc">五味子叶中针对酒精性肝损伤物质的作用机制阐释及基于生化计算学的筛选</div>
+      <div class="paper-authors">
+        <span class="author-avatar av-green">Y</span> Yifan Bing
+        <span class="author-avatar av-blue">X</span> Xiang Zou
+        <span style="background:#F2F3F5;padding:1px 6px;border-radius:3px;font-size:11px;color:#86909C">43</span>
+      </div>
+      <div class="paper-stats">
+        <span>2025.07.01</span>
+        <span class="paper-journal">Phytomedicine (IF 8.3 )</span>
+        <span class="action-btns">
+          <span class="paper-stat">&#128196; 1.6K</span>
+          <span class="paper-stat">&#128279; 66.0</span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> 523</span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 收藏</span>
+        </span>
+      </div>
+    </li>
+    <li class="paper-item">
+      <div class="paper-header">
+        <span class="paper-index">2.</span>
+        <span class="paper-title">Analysis of Macroporous Resin Combined Extraction and Purification of Polyphenols from Agrimonia pilosa Ledeb. and Anti-Tumor Effect In Vitro</span>
+      </div>
+      <div class="paper-desc">大孔树脂联合提取纯化龙牙草多酚的分析及体外抗肿瘤作用</div>
+      <div class="paper-authors">
+        <span class="author-avatar av-blue">Z</span> Zhanghao Mei
+        <span class="author-avatar av-green">H</span> Huifen Li
+        <span style="background:#F2F3F5;padding:1px 6px;border-radius:3px;font-size:11px;color:#86909C">41</span>
+      </div>
+      <div class="paper-stats">
+        <span>2025.03.26</span>
+        <span class="paper-journal">Molecules</span>
+        <span class="action-btns">
+          <span class="paper-stat">&#128196; 111</span>
+          <span class="paper-stat">&#128279; 66.0</span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg> 112</span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 收藏</span>
+        </span>
+      </div>
+    </li>
+    <li class="paper-item">
+      <div class="paper-header">
+        <span class="paper-index">3.</span>
+        <span class="paper-title">A new amine isolated from Urtica thunbergiana Siebold &amp; Zucc</span>
+      </div>
+      <div class="paper-desc">从荨麻（Urtica thunbergiana Siebold &amp; Zucc）中分离出的一种新胺</div>
+      <div class="paper-authors">
+        <span class="author-avatar av-green">M</span> Meiqiu La
+        <span class="author-avatar av-blue">Q</span> Qiji Wang
+        <span style="background:#F2F3F5;padding:1px 6px;border-radius:3px;font-size:11px;color:#86909C">37</span>
+      </div>
+      <div class="paper-stats">
+        <span>2023.02.07</span>
+        <span class="action-btns">
+          <span class="paper-stat">&#128196; 2</span>
+          <span class="paper-stat">&#128279; 0</span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg></span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span>
+          <span class="action-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> 收藏</span>
+        </span>
+      </div>
+    </li>
+  </ul>
+  <div class="load-more">
+    <button class="load-more-btn">查看更多 &#8595;</button>
+  </div>
+</div>
+</div><!-- end section-card -->
+
+</div><!-- end content-area -->
+
+<!-- AI Float Button -->
+<div class="ai-float">AI</div>
+
+</main><!-- end main-content -->
+</div><!-- end app -->
+
+<script>
+// ========== Tab Switching ==========
+function switchTab(el, targetId) {
+  document.querySelectorAll('.detail-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const target = document.getElementById(targetId);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ========== Radar Chart ==========
+(function drawRadar() {
+  const canvas = document.getElementById('radarChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W / 2, cy = H / 2 + 8;
+  const R = Math.min(W, H) * 0.36;
+
+  // Labels & values
+  const labels = ['MW / 100', 'HBA', 'HBD', 'PSA / 10', 'LogP', 'RotB'];
+  const maxes = [5, 10, 10, 14, 5, 10];
+  // caffeic acid: MW=180->1.8, HBA=4, HBD=3, PSA=7.78, LogP=1.2, RotB=2
+  const vals = [1.8, 4, 3, 7.78, 1.2, 2];
+  const lipMaxes = [5, 10, 5, 14, 5, 10]; // Lipinski limits
+  const n = labels.length;
+  const angleStep = (Math.PI * 2) / n;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Draw concentric pentagons
+  for (let level = 1; level <= 5; level++) {
+    const r = R * (level / 5);
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const a = angleStep * i - Math.PI / 2;
+      const px = cx + r * Math.cos(a);
+      const py = cy + r * Math.sin(a);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#F2F3F5';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Draw axes
+  for (let i = 0; i < n; i++) {
+    const a = angleStep * i - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(a), cy + R * Math.sin(a));
+    ctx.strokeStyle = '#F2F3F5';
+    ctx.stroke();
+
+    // Labels
+    const lr = R + 22;
+    const lx = cx + lr * Math.cos(a);
+    const ly = cy + lr * Math.sin(a);
+    ctx.fillStyle = '#86909C';
+    ctx.font = '11px "PingFang SC", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(labels[i], lx, ly);
+  }
+
+  // Draw Lipinski area (reference)
+  function drawPolygon(valuesArr, maxesArr, fillColor, strokeColor) {
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const idx = i % n;
+      const a = angleStep * idx - Math.PI / 2;
+      const ratio = valuesArr[idx] / maxesArr[idx];
+      const pr = R * ratio;
+      const px = cx + pr * Math.cos(a);
+      const py = cy + pr * Math.sin(a);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+  }
+
+  // Substance data (orange)
+  drawPolygon(vals, maxes, 'rgba(245,166,35,0.18)', '#F5A623');
+
+  // Lipinski reference (indigo) - pentagon shape at limits
+  const lipVals = [5, 10, 5, 14, 5, 10];
+  drawPolygon(lipVals, lipMaxes, 'rgba(59,69,229,0.08)', '#3b45e5');
+
+  // Draw dots for actual value
+  for (let i = 0; i < n; i++) {
+    const a = angleStep * i - Math.PI / 2;
+    const ratio = vals[i] / maxes[i];
+    const pr = R * ratio;
+    const px = cx + pr * Math.cos(a);
+    const py = cy + pr * Math.sin(a);
+    ctx.beginPath();
+    ctx.arc(px, py, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#F5A623';
+    ctx.fill();
+  }
+})();
+</script>
+
+<!-- ====== NMR 结构预览浮层 ====== -->
+<div class="preview-overlay" id="previewOverlay">
+  <div class="preview-modal">
+    <div class="preview-head">
+      <span class="preview-title">结构预览</span>
+      <button class="preview-close" id="previewClose" title="关闭"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="preview-canvas-wrap">
+      <div class="preview-toolbar">
+        <div class="preview-legend"><span><span class="dot c"></span>C</span><span><span class="dot h"></span>H</span></div>
+        <div class="preview-mode-switch" id="previewModeSwitch"><button data-mode="2d">2D</button><button data-mode="3d" class="active">3D</button></div>
+      </div>
+      <div class="preview-stage" id="stage2d" style="display:none;">
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#1D2129" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="160,65 195,47 230,63 232,98 198,117 163,101" fill="none" stroke="#1D2129" stroke-width="2"/>
+          <line x1="168" y1="70" x2="192" y2="57" stroke="#1D2129" stroke-width="1.5"/>
+          <line x1="222" y1="71" x2="225" y2="94" stroke="#1D2129" stroke-width="1.5"/>
+          <line x1="172" y1="99" x2="192" y2="111" stroke="#1D2129" stroke-width="1.5"/>
+          <line x1="72" y1="95" x2="130" y2="78" stroke="#1D2129" stroke-width="2"/>
+          <text x="30" y="120" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">HO</text>
+          <text x="58" y="115" font-family="Arial,sans-serif" font-size="16" fill="#333">C</text>
+          <text x="70" y="108" font-family="Arial,sans-serif" font-size="13" fill="#d32f2f" font-weight="bold">O</text>
+          <text x="245" y="68" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">OH</text>
+          <text x="250" y="125" font-family="Arial,sans-serif" font-size="16" fill="#d32f2f" font-weight="bold">OH</text>
+        </svg>
+      </div>
+      <div class="preview-stage" id="stage3d">
+        <svg viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="cBall" cx="35%" cy="32%" r="65%"><stop offset="0%" stop-color="#9af0bd"/><stop offset="55%" stop-color="#22c55e"/><stop offset="100%" stop-color="#1f8a4f"/></radialGradient>
+            <radialGradient id="hBall" cx="35%" cy="32%" r="65%"><stop offset="0%" stop-color="#ffffff"/><stop offset="60%" stop-color="#dcdfe6"/><stop offset="100%" stop-color="#a7adb8"/></radialGradient>
+          </defs>
+          <g stroke="#1f8a4f" stroke-width="5" stroke-linecap="round">
+            <line x1="140" y1="65" x2="110" y2="100"/><line x1="110" y1="100" x2="140" y2="135"/>
+            <line x1="140" y1="135" x2="180" y2="135"/><line x1="180" y1="135" x2="210" y2="100"/>
+            <line x1="210" y1="100" x2="180" y2="65"/><line x1="180" y1="65" x2="140" y2="65"/>
+            <line x1="160" y1="55" x2="160" y2="145"/><line x1="140" y1="65" x2="160" y2="55"/>
+            <line x1="180" y1="65" x2="160" y2="55"/>
+          </g>
+          <g stroke="#9aa1ad" stroke-width="3" stroke-linecap="round">
+            <line x1="140" y1="65" x2="130" y2="30"/><line x1="110" y1="100" x2="75" y2="100"/>
+            <line x1="140" y1="135" x2="130" y2="170"/><line x1="180" y1="135" x2="190" y2="170"/>
+            <line x1="210" y1="100" x2="245" y2="100"/><line x1="180" y1="65" x2="190" y2="30"/>
+          </g>
+          <g><circle cx="140" cy="65" r="13" fill="url(#cBall)"/><circle cx="110" cy="100" r="13" fill="url(#cBall)"/><circle cx="140" cy="135" r="13" fill="url(#cBall)"/><circle cx="180" cy="135" r="13" fill="url(#cBall)"/><circle cx="210" cy="100" r="13" fill="url(#cBall)"/><circle cx="180" cy="65" r="13" fill="url(#cBall)"/><circle cx="160" cy="55" r="13" fill="url(#cBall)"/></g>
+          <g><circle cx="130" cy="30" r="7" fill="url(#hBall)"/><circle cx="75" cy="100" r="7" fill="url(#hBall)"/><circle cx="130" cy="170" r="7" fill="url(#hBall)"/><circle cx="190" cy="170" r="7" fill="url(#hBall)"/><circle cx="245" cy="100" r="7" fill="url(#hBall)"/><circle cx="190" cy="30" r="7" fill="url(#hBall)"/></g>
+        </svg>
+      </div>
+    </div>
+    <div class="preview-foot">
+      <span id="previewIndex">1/3</span>
+      <div class="preview-nav">
+        <button id="previewPrev" title="上一个"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button id="previewNext" title="下一个"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.preview-overlay { position: fixed; inset: 0; background: rgba(15, 18, 30, 0.45); z-index: 200; display: none; align-items: center; justify-content: center; }
+.preview-overlay.show { display: flex; }
+.preview-modal { width: 540px; max-width: calc(100vw - 40px); background: #fff; border-radius: 16px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; }
+.preview-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-bottom: 1px solid #F2F3F5; }
+.preview-title { font-size: 16px; font-weight: 600; color: #1D2129; }
+.preview-close { border: none; background: transparent; cursor: pointer; color: #86909C; padding: 4px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; }
+.preview-close:hover { background: #F2F3F5; color: #1D2129; }
+.preview-canvas-wrap { position: relative; margin: 16px 24px; background: #F7F8FA; border-radius: 12px; height: 360px; overflow: hidden; }
+.preview-toolbar { position: absolute; top: 12px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+.preview-legend { display: inline-flex; align-items: center; gap: 14px; font-size: 13px; color: #4E5969; }
+.preview-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+.preview-legend .dot.c { background: #22c55e; }
+.preview-legend .dot.h { background: #C9CDD4; }
+.preview-mode-switch { display: inline-flex; background: #fff; border: 1px solid #E5E6EB; border-radius: 999px; padding: 3px; }
+.preview-mode-switch button { border: none; background: transparent; cursor: pointer; padding: 5px 16px; border-radius: 999px; font-size: 13px; color: #4E5969; }
+.preview-mode-switch button.active { background: #020C1A; color: #fff; }
+.preview-stage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.preview-stage svg { max-width: 90%; max-height: 90%; }
+.preview-foot { display: flex; align-items: center; justify-content: space-between; padding: 12px 24px 18px; color: #86909C; font-size: 13px; }
+.preview-nav { display: inline-flex; gap: 6px; }
+.preview-nav button { width: 28px; height: 28px; border: 1px solid #E5E6EB; background: #fff; border-radius: 8px; cursor: pointer; color: #86909C; display: inline-flex; align-items: center; justify-content: center; }
+.preview-nav button:hover:not(:disabled) { color: #3b45e5; border-color: #C9CDD4; }
+.preview-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+</style>
+
+<script>
+// ========== NMR 结构预览 ==========
+(function(){
+  const overlay = document.getElementById('previewOverlay');
+  const closeBtn = document.getElementById('previewClose');
+  const prevBtn = document.getElementById('previewPrev');
+  const nextBtn = document.getElementById('previewNext');
+  const indexSpan = document.getElementById('previewIndex');
+  const triggers = document.querySelectorAll('.preview-trigger');
+  const modeSwitch = document.getElementById('previewModeSwitch');
+  const stage2d = document.getElementById('stage2d');
+  const stage3d = document.getElementById('stage3d');
+  const total = triggers.length;
+  let cur = 0;
+
+  if (!overlay || total === 0) return;
+
+  function updateIndex() {
+    indexSpan.textContent = (cur + 1) + '/' + total;
+    prevBtn.disabled = cur === 0;
+    nextBtn.disabled = cur === total - 1;
+  }
+
+  function open(idx) { cur = idx; updateIndex(); overlay.classList.add('show'); }
+  function close() { overlay.classList.remove('show'); }
+
+  triggers.forEach((btn, i) => { btn.addEventListener('click', function(e) { e.stopPropagation(); open(i); }); });
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  prevBtn.addEventListener('click', function() { if (cur > 0) { cur--; updateIndex(); } });
+  nextBtn.addEventListener('click', function() { if (cur < total - 1) { cur++; updateIndex(); } });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('show')) close(); });
+
+  modeSwitch.querySelectorAll('button').forEach(function(b) {
+    b.addEventListener('click', function() {
+      modeSwitch.querySelectorAll('button').forEach(function(x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      var is3d = b.dataset.mode === '3d';
+      stage3d.style.display = is3d ? 'flex' : 'none';
+      stage2d.style.display = is3d ? 'none' : 'flex';
+    });
+  });
+})();
+</script>
+
+</body>
